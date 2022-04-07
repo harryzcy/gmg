@@ -10,7 +10,7 @@ import (
 func Auth() {
 	flow := &oauth.Flow{
 		Host:     oauth.GitHubHost("https://github.com"),
-		ClientID: os.Getenv("OAUTH_CLIENT_ID"),
+		ClientID: os.Getenv("GITHUB_CLIENT_ID"),
 		Scopes:   []string{"repo"},
 	}
 
