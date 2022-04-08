@@ -8,7 +8,7 @@ import (
 	"github.com/harryzcy/gmg/internal/storage"
 )
 
-func Auth() error {
+func Login() error {
 	storage.InitDefault()
 
 	token := storage.GetToken(storage.TokenKindCLI)
