@@ -63,8 +63,13 @@ func StoreToken(kind TokenName, token *api.AccessToken) error {
 
 func GetToken(kind TokenName) *api.AccessToken {
 	name := string(kind)
+	token := tokenViper.GetString(name + ".token")
+	if token == "" {
+		return nil
+	}
+
 	return &api.AccessToken{
-		Token:        tokenViper.GetString(name + ".token"),
+		Token:        token,
 		RefreshToken: tokenViper.GetString(name + ".refresh-token"),
 		Type:         tokenViper.GetString(name + ".type"),
 		Scope:        tokenViper.GetString(name + ".scope"),

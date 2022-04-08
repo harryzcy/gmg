@@ -53,6 +53,18 @@ func TestToken(t *testing.T) {
 	}
 }
 
+func TestGetToken_Nil(t *testing.T) {
+	Init("./testdata")
+	defer func() {
+		err := os.RemoveAll("./testdata")
+		if err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	assert.Nil(t, GetToken("gh_test"))
+}
+
 func TestInitDefault(t *testing.T) {
 	testDir := path.Join(os.Getenv("HOME"), ".gmg")
 
