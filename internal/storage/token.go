@@ -46,19 +46,17 @@ type Tokens struct {
 type TokenName string
 
 const (
-	TokenPrefix = "token."
-
 	TokenKindCLI         TokenName = "gh_cli"
 	TokenKindGitHubGitea TokenName = "gh_gitea"
 )
 
 func StoreToken(kind TokenName, token string) error {
-	tokenViper.Set(TokenPrefix+string(kind), token)
+	tokenViper.Set(string(kind), token)
 	return saveTokenFile()
 }
 
 func GetToken(kind TokenName) string {
-	return tokenViper.GetString(TokenPrefix + string(kind))
+	return tokenViper.GetString(string(kind))
 }
 
 func saveTokenFile() error {
