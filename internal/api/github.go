@@ -1,11 +1,15 @@
 package api
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/cli/oauth"
+	"github.com/google/go-github/v43/github"
 	"github.com/harryzcy/gmg/internal/storage"
+	"golang.org/x/oauth2"
 )
 
 func Login() error {
@@ -57,6 +61,37 @@ func Login() error {
 
 		fmt.Println("Successfully authenticated with GitHub")
 	}
+
+	return nil
+}
+
+func CreateRepo(name string) error {
+	ctx := context.Background()
+
+	storage.InitDefault()
+	accessToken := storage.GetToken(storage.TokenKindCLI)
+	if accessToken == nil {
+		fmt.Println("You are not authenticated, please run `gmg auth login` first.")
+		return errors.New("not authenticated")
+	}
+
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: accessToken.Token},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+
+	client := github.NewClient(tc)
+
+	org := os.Getenv("GITHUB_ORG")
+	repo, _, err := client.Repositories.Create(ctx, org, &github.Repository{
+		Name: &name,
+	})
+	if err != nil {
+		fmt.Println("Failed to create repository:", err)
+		return err
+	}
+
+	fmt.Println("Successfully created repository:", repo.GetCloneURL())
 
 	return nil
 }
