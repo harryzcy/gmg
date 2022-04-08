@@ -5,6 +5,9 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/harryzcy/gmg/internal/api"
 	"github.com/spf13/cobra"
 )
@@ -19,7 +22,11 @@ var loginCmd = &cobra.Command{
 	Use:   "login",
 	Short: "Obtain GitHub OAuth tokens for CLI and Gitea",
 	Run: func(cmd *cobra.Command, args []string) {
-		api.Login()
+		err := api.Login()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 
