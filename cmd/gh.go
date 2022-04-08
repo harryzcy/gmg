@@ -12,15 +12,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// repoCmd represents the repo command
-var repoCmd = &cobra.Command{
-	Use:   "repo",
-	Short: "Manage repositories",
+// ghCmd represents the gh command
+var ghCmd = &cobra.Command{
+	Use:   "gh",
+	Short: "Manage GitHub repositories",
 }
 
 var repoCreateCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Create a repository",
+	Short: "Create a GitHub repository",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			fmt.Println("Please specify a repository name")
@@ -39,7 +39,7 @@ var repoCreateCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(repoCmd)
+	rootCmd.AddCommand(ghCmd)
 
-	repoCmd.AddCommand(repoCreateCmd)
+	ghCmd.AddCommand(repoCreateCmd)
 }
