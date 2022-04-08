@@ -2,10 +2,11 @@ package storage
 
 import (
 	"errors"
-	"log"
+	"fmt"
 	"os"
 	"path"
 
+	"github.com/cli/oauth/api"
 	"github.com/spf13/viper"
 )
 
@@ -20,7 +21,8 @@ func Init(directory string) {
 	}
 	err := loadToken()
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 }
 
@@ -50,13 +52,23 @@ const (
 	TokenKindGitHubGitea TokenName = "gh_gitea"
 )
 
-func StoreToken(kind TokenName, token string) error {
-	tokenViper.Set(string(kind), token)
+func StoreToken(kind TokenName, token *api.AccessToken) error {
+	name := string(kind)
+	tokenViper.Set(name+".token", token.Token)
+	tokenViper.Set(name+".refresh-token", token.RefreshToken)
+	tokenViper.Set(name+".type", token.Type)
+	tokenViper.Set(name+".scope", token.Scope)
 	return saveTokenFile()
 }
 
-func GetToken(kind TokenName) string {
-	return tokenViper.GetString(string(kind))
+func GetToken(kind TokenName) *api.AccessToken {
+	name := string(kind)
+	return &api.AccessToken{
+		Token:        tokenViper.GetString(name + ".token"),
+		RefreshToken: tokenViper.GetString(name + ".refresh-token"),
+		Type:         tokenViper.GetString(name + ".type"),
+		Scope:        tokenViper.GetString(name + ".scope"),
+	}
 }
 
 func saveTokenFile() error {

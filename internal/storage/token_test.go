@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/cli/oauth/api"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -20,12 +21,27 @@ func TestToken(t *testing.T) {
 
 	tests := []struct {
 		kind        TokenName
-		token       string
+		token       *api.AccessToken
 		expectedErr error
 	}{
-		{TokenKindCLI, "gh_cli", nil},
-		{TokenKindGitHubGitea, "gh_gitea", nil},
-		{TokenKindGitHubGitea, "gh_gitea_new", nil},
+		{TokenKindCLI, &api.AccessToken{
+			Token:        "cli-0token",
+			RefreshToken: "cli-refresh-token",
+			Type:         "cli-type",
+			Scope:        "cli-scope",
+		}, nil},
+		{TokenKindGitHubGitea, &api.AccessToken{
+			Token:        "g-token",
+			RefreshToken: "g-refresh-token",
+			Type:         "g-type",
+			Scope:        "g-scope",
+		}, nil},
+		{TokenKindGitHubGitea, &api.AccessToken{
+			Token:        "g-token-new",
+			RefreshToken: "g-refresh-token-new",
+			Type:         "g-type-new",
+			Scope:        "g-scope-new",
+		}, nil},
 	}
 
 	for i, test := range tests {
