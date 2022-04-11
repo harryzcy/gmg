@@ -10,8 +10,9 @@ import (
 
 // ghCmd represents the gh command
 var ghCmd = &cobra.Command{
-	Use:   "gh",
-	Short: "Manage GitHub repositories",
+	Use:     "gh",
+	Aliases: []string{"github"},
+	Short:   "Manage GitHub repositories",
 }
 
 var repoCreateCmd = &cobra.Command{
