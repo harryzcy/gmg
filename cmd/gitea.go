@@ -41,10 +41,40 @@ var giteaMigrateCmd = &cobra.Command{
 	},
 }
 
+var giteaMirrorCmd = &cobra.Command{
+	Use:   "mirror",
+	Short: "Mirror a repository to Gitea",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("Please specify the repository URL")
+			os.Exit(1)
+		} else if len(args) > 1 {
+			fmt.Println("Please specify only one repository URL")
+			os.Exit(1)
+		}
+
+		uri := args[0]
+		options := api.MigrateRepoOptions{
+			GitURI: uri,
+			Mirror: true,
+		}
+
+		options.Name, _ = cmd.Flags().GetString("name")
+
+		err := api.MigrateRepo(options)
+		if err != nil {
+			os.Exit(1)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(giteaCmd)
 
 	giteaCmd.AddCommand(giteaMigrateCmd)
 	giteaMigrateCmd.Flags().BoolP("mirror", "m", false, "mirror the repository")
 	giteaMigrateCmd.Flags().StringP("name", "n", "", "name of the repository")
+
+	giteaCmd.AddCommand(giteaMirrorCmd)
+	giteaMirrorCmd.Flags().StringP("name", "n", "", "name of the repository")
 }
