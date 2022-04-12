@@ -26,17 +26,15 @@ var giteaMigrateCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		mirror, err := cmd.Flags().GetBool("mirror")
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+		uri := args[0]
+		options := api.MigrateRepoOptions{
+			GitURI: uri,
 		}
 
-		uri := args[0]
-		err = api.MigrateRepo(api.MigrateRepoOptions{
-			GitURI: uri,
-			Mirror: mirror,
-		})
+		options.Mirror, _ = cmd.Flags().GetBool("mirror")
+		options.Name, _ = cmd.Flags().GetString("name")
+
+		err := api.MigrateRepo(options)
 		if err != nil {
 			os.Exit(1)
 		}
@@ -48,4 +46,5 @@ func init() {
 
 	giteaCmd.AddCommand(giteaMigrateCmd)
 	giteaMigrateCmd.Flags().BoolP("mirror", "m", false, "mirror the repository")
+	giteaMigrateCmd.Flags().StringP("name", "n", "", "name of the repository")
 }
