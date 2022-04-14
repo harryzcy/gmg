@@ -46,7 +46,7 @@ func Login() error {
 		flow := &oauth.Flow{
 			Host:     oauth.GitHubHost("https://github.com"),
 			ClientID: os.Getenv("GITHUB_CLIENT_ID"),
-			Scopes:   []string{"repo"},
+			Scopes:   []string{"repo", "workflow"},
 		}
 
 		accessToken, err := flow.DetectFlow()
