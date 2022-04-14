@@ -74,8 +74,10 @@ func init() {
 
 	giteaCmd.AddCommand(giteaMigrateCmd)
 	giteaMigrateCmd.Flags().BoolP("mirror", "m", false, "mirror the repository")
+	giteaMigrateCmd.Flags().BoolP("private", "", false, "create the private repository")
 	giteaMigrateCmd.Flags().StringP("name", "n", "", "name of the repository")
 
 	giteaCmd.AddCommand(giteaMirrorCmd)
+	giteaMirrorCmd.Flags().BoolP("private", "", false, "create the private repository")
 	giteaMirrorCmd.Flags().StringP("name", "n", "", "name of the repository")
 }

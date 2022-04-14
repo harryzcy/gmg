@@ -19,10 +19,12 @@ var (
 	GITEA_TOKEN  = os.Getenv("GITEA_ACCESS_TOKEN")
 )
 
+// MigrateRepoOptions represents the options for migrating a repository
 type MigrateRepoOptions struct {
-	Name   string
-	GitURI string
-	Mirror bool // if true, mirror the repository
+	GitURI  string
+	Name    string
+	Mirror  bool // if true, mirror the repository
+	Private bool // if true, create a private repository
 }
 
 func MigrateRepo(options MigrateRepoOptions) error {
@@ -47,6 +49,7 @@ func getNameFromGitURI(gitURI string) string {
 	return name
 }
 
+// requestMigration requests a migration to Gitea
 func requestMigration(options MigrateRepoOptions) error {
 	storage.InitDefault()
 
@@ -61,6 +64,7 @@ func requestMigration(options MigrateRepoOptions) error {
 		"auth_token": token.Token,
 		"clone_addr": options.GitURI,
 		"mirror":     options.Mirror,
+		"private":    options.Private,
 		"repo_name":  options.Name,
 		"repo_owner": GITEA_ORG,
 		"server":     "github",
