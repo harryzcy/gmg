@@ -34,6 +34,7 @@ var giteaMigrateCmd = &cobra.Command{
 
 		options.Mirror, _ = cmd.Flags().GetBool("mirror")
 		options.Name, _ = cmd.Flags().GetString("name")
+		options.Private, _ = cmd.Flags().GetBool("private")
 
 		err = api.MigrateRepo(options)
 		if err != nil {
