@@ -12,6 +12,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
+// Login obtains OAuth tokens from GitHub
 func Login() error {
 	storage.InitDefault()
 
@@ -65,10 +66,16 @@ func Login() error {
 	return nil
 }
 
+// CreateRepo creates a repository on GitHub
 func CreateRepo(name string) error {
 	ctx := context.Background()
-
 	storage.InitDefault()
+
+	return createRepoWithContext(ctx, name)
+}
+
+// CreateRepoWithContext creates a repository on GitHub with a context
+func createRepoWithContext(ctx context.Context, name string) error {
 	accessToken := storage.GetToken(storage.TokenKindCLI)
 	if accessToken == nil {
 		fmt.Println("You are not authenticated, please run `gmg auth login` first.")
