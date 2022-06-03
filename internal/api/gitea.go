@@ -43,9 +43,8 @@ func MigrateRepo(options MigrateRepoOptions) error {
 func getNameFromGitURI(gitURI string) string {
 	parts := strings.Split(gitURI, "/")
 	name := parts[len(parts)-1]
-	if strings.HasSuffix(name, ".git") {
-		name = name[:len(name)-4]
-	}
+
+	name = strings.TrimSuffix(name, ".git")
 	return name
 }
 
@@ -92,6 +91,10 @@ func requestMigration(options MigrateRepoOptions) error {
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Failed to read response body:", err)
+		return err
+	}
 
 	var result map[string]interface{}
 	err = json.Unmarshal(body, &result)
