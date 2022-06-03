@@ -52,7 +52,7 @@ func GetURI(args []string) (string, error) {
 	domain := parts[0]
 	path := parts[1]
 
-	pattern := regexp.MustCompile(`^([a-zA-Z0-9][a-zA-Z0-9-]*\\.)?[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$`)
+	pattern := regexp.MustCompile(`^([a-zA-Z0-9][a-zA-Z0-9-]*\.)?[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$`)
 	if !pattern.MatchString(domain) {
 		return "", ErrInvalidUri
 	}
@@ -69,7 +69,7 @@ func GetURI(args []string) (string, error) {
 	}
 
 	repo := parts[1]
-	pattern = regexp.MustCompile(`^[a-zA-Z0-9-_\\.]+$`)
+	pattern = regexp.MustCompile(`^[a-zA-Z0-9-_\.]+$`)
 	if !pattern.MatchString(repo) {
 		return "", ErrInvalidUri
 	}
