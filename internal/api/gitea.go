@@ -58,6 +58,11 @@ func requestMigration(options MigrateRepoOptions) error {
 		return errors.New("GitHub token is required")
 	}
 
+	if GITEA_SERVER == "" {
+		fmt.Println("env GITEA_SERVER is required")
+		return errors.New("env GITEA_SERVER is required")
+	}
+
 	url := GITEA_SERVER + "/api/v1/repos/migrate"
 	values := map[string]interface{}{
 		"auth_token": token.Token,
