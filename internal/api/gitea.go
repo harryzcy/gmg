@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -95,7 +95,7 @@ func requestMigration(options MigrateRepoOptions) error {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Failed to read response body:", err)
 		return err
@@ -109,7 +109,7 @@ func requestMigration(options MigrateRepoOptions) error {
 	}
 
 	if resp.StatusCode != http.StatusCreated {
-		err := fmt.Errorf("Failed to create repository: %s", resp.Status)
+		err := fmt.Errorf("failed to create repository: %s", resp.Status)
 
 		if resp.StatusCode == http.StatusConflict {
 			fmt.Println("The repository with the same name already exists.")
