@@ -3,7 +3,7 @@ module github.com/harryzcy/gmg
 go 1.19
 
 require (
-	github.com/cli/oauth v0.9.0
+	github.com/cli/oauth v1.0.0
 	github.com/google/go-github/v43 v43.0.0
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.14.0
