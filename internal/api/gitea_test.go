@@ -29,3 +29,26 @@ func TestGetNameFromGitURI(t *testing.T) {
 		})
 	}
 }
+
+func TestValidateGitURI(t *testing.T) {
+	tests := []struct {
+		gitURI string
+		valid  bool
+	}{
+		{
+			gitURI: "https://github.com/harryzcy/gmg.git",
+			valid:  true,
+		},
+		{
+			gitURI: "",
+			valid:  false,
+		},
+	}
+
+	for i, test := range tests {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			valid := validateGitURI(test.gitURI)
+			assert.Equal(t, test.valid, valid)
+		})
+	}
+}

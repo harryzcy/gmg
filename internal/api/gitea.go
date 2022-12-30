@@ -132,3 +132,87 @@ func requestMigration(options MigrateRepoOptions) error {
 	fmt.Println("Successfully migrated repository:", options.Name)
 	return nil
 }
+
+type SetupPushMirrorOptions struct {
+	UsernameRepo string
+	GitURI       string
+}
+
+func SetupPushMirror(options SetupPushMirrorOptions) error {
+	storage.InitDefault()
+
+	token := storage.GetToken(storage.TokenKindGitHubGitea)
+	if token == nil {
+		fmt.Println("You are not authenticated, please run `gmg auth login` first.")
+		return errors.New("GitHub token is required")
+	}
+
+	if GITEA_SERVER == "" {
+		fmt.Println("env GITEA_SERVER is required")
+		return errors.New("env GITEA_SERVER is required")
+	}
+
+	if ok := validateGitURI(options.GitURI); !ok {
+		fmt.Println("invalid git uri")
+		return errors.New("invalid git uri")
+	}
+
+	url := GITEA_SERVER + "/api/v1/repos/" + options.UsernameRepo + "/push_mirrors"
+	values := map[string]interface{}{
+		"interval":        "8h0m0s",
+		"remote_address":  options.GitURI,
+		"remote_password": token.Token,
+		"remote_username": strings.SplitN(options.GitURI, "/", 3)[1],
+	}
+	data, err := json.Marshal(values)
+	if err != nil {
+		fmt.Println("Failed to marshal request body:", err)
+		return err
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
+	if err != nil {
+		fmt.Println("Failed to create request:", err)
+		return err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+GITEA_TOKEN)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Failed to send request:", err)
+		return err
+	}
+
+	if resp.StatusCode != http.StatusCreated {
+		err = fmt.Errorf("failed to create repository: %s", resp.Status)
+		fmt.Println("Failed to create repository:", resp.Status)
+		return err
+	}
+
+	fmt.Printf("Successfully added a push mirror to %s\n", options.UsernameRepo)
+	return nil
+}
+
+func validateGitURI(git_uri string) bool {
+	if strings.HasPrefix(git_uri, "https://") {
+		git_uri = strings.TrimPrefix(git_uri, "https://")
+	} else if strings.HasPrefix(git_uri, "http://") {
+		git_uri = strings.TrimPrefix(git_uri, "http://")
+	} else if strings.HasPrefix(git_uri, "git@") {
+		git_uri = strings.TrimPrefix(git_uri, "git@")
+	} else {
+		return false
+	}
+
+	parts := strings.Split(git_uri, "/")
+	if len(parts) != 3 {
+		return false
+	}
+
+	if !strings.HasSuffix(parts[2], ".git") {
+		return false
+	}
+	return true
+}
