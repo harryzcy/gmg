@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/cli/oauth"
-	"github.com/google/go-github/v43/github"
+	"github.com/google/go-github/v49/github"
 	"github.com/harryzcy/gmg/internal/storage"
 	"golang.org/x/oauth2"
 )
