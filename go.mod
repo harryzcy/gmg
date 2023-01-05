@@ -4,8 +4,7 @@ go 1.19
 
 require (
 	github.com/cli/oauth v1.0.0
-	github.com/google/go-github/v43 v43.0.0
-	github.com/google/go-github/v48 v48.2.0
+	github.com/google/go-github/v49 v49.0.0
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.14.0
 	github.com/stretchr/testify v1.8.1
@@ -30,7 +29,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.1 // indirect
-	golang.org/x/crypto v0.4.0 // indirect
+	golang.org/x/crypto v0.5.0 // indirect
 	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/sys v0.4.0 // indirect
 	golang.org/x/text v0.6.0 // indirect
