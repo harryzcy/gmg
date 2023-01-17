@@ -159,10 +159,11 @@ func SetupPushMirror(options SetupPushMirrorOptions) error {
 
 	url := GITEA_SERVER + "/api/v1/repos/" + options.UsernameRepo + "/push_mirrors"
 	values := map[string]interface{}{
-		"interval":        "8h0m0s",
+		"interval":        "0",
 		"remote_address":  options.GitURI,
 		"remote_password": token.Token,
 		"remote_username": strings.SplitN(options.GitURI, "/", 3)[1],
+		"sync_on_commit":  true,
 	}
 	data, err := json.Marshal(values)
 	if err != nil {
