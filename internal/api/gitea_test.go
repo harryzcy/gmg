@@ -36,7 +36,7 @@ func TestValidateGitURI(t *testing.T) {
 		valid  bool
 	}{
 		{
-			gitURI: "https://go.zcy.dev/gmg.git",
+			gitURI: "https://github.com/harryzcy/gmg.git",
 			valid:  true,
 		},
 		{
