@@ -1,4 +1,4 @@
-module github.com/harryzcy/gmg
+module go.zcy.dev/gmg
 
 go 1.20
 

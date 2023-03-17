@@ -8,7 +8,7 @@ import (
 
 	"github.com/cli/oauth"
 	"github.com/google/go-github/v50/github"
-	"github.com/harryzcy/gmg/internal/storage"
+	"go.zcy.dev/gmg/internal/storage"
 	"golang.org/x/oauth2"
 )
 

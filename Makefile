@@ -1,7 +1,7 @@
 .PHONY: install lint test
 
 COMMIT := $(shell git rev-parse --short HEAD)
-FLAGS := -ldflags "-X github.com/harryzcy/gmg/cmd.commit=$(COMMIT)"
+FLAGS := -ldflags "-X go.zcy.dev/gmg/cmd.commit=$(COMMIT)"
 
 install:
 	go install $(FLAGS)

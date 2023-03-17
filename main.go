@@ -1,6 +1,6 @@
 package main
 
-import "github.com/harryzcy/gmg/cmd"
+import "go.zcy.dev/gmg/cmd"
 
 func main() {
 	cmd.Execute()
