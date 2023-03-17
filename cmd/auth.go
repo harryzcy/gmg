@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/harryzcy/gmg/internal/api"
 	"github.com/spf13/cobra"
+	"go.zcy.dev/gmg/internal/api"
 )
 
 // authCmd represents the auth command

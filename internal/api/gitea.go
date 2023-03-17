@@ -10,7 +10,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/harryzcy/gmg/internal/storage"
+	"go.zcy.dev/gmg/internal/storage"
 )
 
 var (
@@ -186,7 +186,7 @@ func SetupPushMirror(options SetupPushMirrorOptions) error {
 		return err
 	}
 
-	if resp.StatusCode != http.StatusCreated {
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
 		err = fmt.Errorf("failed to create repository: %s", resp.Status)
 		fmt.Println("Failed to create repository:", resp.Status)
 		return err

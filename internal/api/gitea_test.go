@@ -13,7 +13,7 @@ func TestGetNameFromGitURI(t *testing.T) {
 		name   string
 	}{
 		{
-			gitURI: "https://github.com/harryzcy/gmg.git",
+			gitURI: "https://go.zcy.dev/gmg.git",
 			name:   "gmg",
 		},
 		{
@@ -36,7 +36,7 @@ func TestValidateGitURI(t *testing.T) {
 		valid  bool
 	}{
 		{
-			gitURI: "https://github.com/harryzcy/gmg.git",
+			gitURI: "https://go.zcy.dev/gmg.git",
 			valid:  true,
 		},
 		{
