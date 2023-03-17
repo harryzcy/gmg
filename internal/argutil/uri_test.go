@@ -22,12 +22,12 @@ func TestCheckUri(t *testing.T) {
 			err:  ErrInvalidArgument,
 		},
 		{
-			args: []string{"https://go.zcy.dev/gmg"},
-			uri:  "https://go.zcy.dev/gmg",
+			args: []string{"https://github.com/harryzcy/gmg"},
+			uri:  "https://github.com/harryzcy/gmg",
 		},
 		{
-			args: []string{"http://go.zcy.dev/gmg"},
-			uri:  "http://go.zcy.dev/gmg",
+			args: []string{"http://github.com/harryzcy/gmg"},
+			uri:  "http://github.com/harryzcy/gmg",
 		},
 		{
 			args: []string{"git://github.com:harryzcy/gmg"},
