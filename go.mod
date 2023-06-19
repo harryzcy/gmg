@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/cli/oauth v1.0.1
-	github.com/google/go-github/v53 v53.1.0
+	github.com/google/go-github/v53 v53.2.0
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 	github.com/stretchr/testify v1.8.4
