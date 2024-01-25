@@ -7,5 +7,15 @@
   ],
   "labels": [
     "dependencies"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "digest": {
+        "automerge": true
+      }
+    }
   ]
 }
