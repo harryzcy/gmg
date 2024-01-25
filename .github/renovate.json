@@ -7,5 +7,15 @@
   ],
   "labels": [
     "dependencies"
+  ],
+  "packageRules": [
+    {
+      "fileMatch": [
+        ".github/workflows/"
+      ],
+      "digest": {
+        "automerge": true
+      }
+    }
   ]
 }
