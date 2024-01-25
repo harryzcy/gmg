@@ -6,13 +6,30 @@ on:
       - "v*"
 
 jobs:
-  build:
+  release:
+    if: github.repository_owner == 'harryzcy'
+    name: Release on GitHub
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: ncipollo/release-action@6c75be85e571768fa31b40abf38de58ba0397db5 # v1
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - uses: release-drafter/release-drafter@09c613e259eb8d4e7c81c2cb00618eb5fc4575a7 # v5
+        id: release_drafter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Release
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         with:
-          name: Release ${{ github.ref_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{ steps.release_drafter.outputs.id }},
+              tag_name: '${{ github.ref_name }}',
+              name: 'Release ${{ github.ref_name }}',
+              draft: context.eventName != 'push'
+            });
