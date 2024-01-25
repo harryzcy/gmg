@@ -10,8 +10,8 @@
   ],
   "packageRules": [
     {
-      "fileMatch": [
-        ".github/workflows/"
+      "matchManagers": [
+        "github-actions"
       ],
       "digest": {
         "automerge": true
