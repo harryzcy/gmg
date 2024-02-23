@@ -23,17 +23,17 @@ func GetURI(args []string) (string, error) {
 	uri := args[0]
 
 	var isGit bool
-	var trimmedUri string
+	var trimmedURI string
 	switch {
 	case strings.HasPrefix(uri, "http://"):
-		trimmedUri = strings.TrimPrefix(uri, "http://")
+		trimmedURI = strings.TrimPrefix(uri, "http://")
 	case strings.HasPrefix(uri, "https://"):
-		trimmedUri = strings.TrimPrefix(uri, "https://")
+		trimmedURI = strings.TrimPrefix(uri, "https://")
 	case strings.HasPrefix(uri, "git@"):
-		trimmedUri = strings.TrimPrefix(uri, "git@")
+		trimmedURI = strings.TrimPrefix(uri, "git@")
 		isGit = true
 	case strings.HasPrefix(uri, "git://"):
-		trimmedUri = strings.TrimPrefix(uri, "git://")
+		trimmedURI = strings.TrimPrefix(uri, "git://")
 		isGit = true
 	default:
 		return "", ErrInvalidURI
@@ -41,9 +41,9 @@ func GetURI(args []string) (string, error) {
 
 	var parts []string
 	if isGit {
-		parts = strings.SplitN(trimmedUri, ":", 2)
+		parts = strings.SplitN(trimmedURI, ":", 2)
 	} else {
-		parts = strings.SplitN(trimmedUri, "/", 2)
+		parts = strings.SplitN(trimmedURI, "/", 2)
 	}
 
 	if len(parts) != 2 {

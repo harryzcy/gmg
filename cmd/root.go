@@ -10,7 +10,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "gmg",
 	Short: "Set up repository mirrors between Gitea and GitHub",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(cmd *cobra.Command, _ []string) {
 		err := cmd.Help()
 		if err != nil {
 			os.Exit(1)
