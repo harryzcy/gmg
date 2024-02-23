@@ -11,7 +11,10 @@ var rootCmd = &cobra.Command{
 	Use:   "gmg",
 	Short: "Set up repository mirrors between Gitea and GitHub",
 	Run: func(cmd *cobra.Command, args []string) {
-		_ = cmd.Help()
+		err := cmd.Help()
+		if err != nil {
+			os.Exit(1)
+		}
 	},
 }
 

@@ -33,9 +33,21 @@ var giteaMigrateCmd = &cobra.Command{
 			GitURI: uri,
 		}
 
-		options.Mirror, _ = cmd.Flags().GetBool("mirror")
-		options.Name, _ = cmd.Flags().GetString("name")
-		options.Private, _ = cmd.Flags().GetBool("private")
+		options.Mirror, err = cmd.Flags().GetBool("mirror")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		options.Name, err = cmd.Flags().GetString("name")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		options.Private, err = cmd.Flags().GetBool("private")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 
 		err = api.MigrateRepo(options)
 		if err != nil {
@@ -55,9 +67,14 @@ var giteaMirrorCmd = &cobra.Command{
 			Mirror: true,
 		}
 
-		options.Name, _ = cmd.Flags().GetString("name")
+		var err error
+		options.Name, err = cmd.Flags().GetString("name")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 
-		err := api.MigrateRepo(options)
+		err = api.MigrateRepo(options)
 		if err != nil {
 			os.Exit(1)
 		}
@@ -69,7 +86,7 @@ var giteaPushMirrorCmd = &cobra.Command{
 	Args:    cobra.ExactArgs(2),
 	Aliases: []string{"pm"},
 	Short:   "Setup a push mirror to a repository",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, args []string) {
 		options := api.SetupPushMirrorOptions{
 			UsernameRepo: args[0],
 			GitURI:       args[1],

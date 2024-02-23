@@ -17,7 +17,7 @@ var authCmd = &cobra.Command{
 var loginCmd = &cobra.Command{
 	Use:   "login",
 	Short: "Obtain GitHub OAuth tokens for CLI and Gitea",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		err := api.Login()
 		if err != nil {
 			fmt.Println(err)
