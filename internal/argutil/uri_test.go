@@ -43,39 +43,39 @@ func TestCheckUri(t *testing.T) {
 		},
 		{
 			args: []string{"invalid@github.com:harryzcy/gmg"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"git@github.com"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"git@github.com:harryzcy"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"https://github.com:harryzcy"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"git@github.com/harryzcy/"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"git@github.com:harryzcy/gmg/path"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"git@invalid~domain.com:harryzcy/gmg"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"git@github.com:invalid.username/gmg"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 		{
 			args: []string{"git@github.com:harryzcy/invalid~repo"},
-			err:  ErrInvalidUri,
+			err:  ErrInvalidURI,
 		},
 	}
 

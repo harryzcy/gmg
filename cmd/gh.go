@@ -18,7 +18,7 @@ var ghCmd = &cobra.Command{
 var repoCreateCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a GitHub repository",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, args []string) {
 		if len(args) == 0 {
 			fmt.Println("Please specify a repository name")
 			os.Exit(1)

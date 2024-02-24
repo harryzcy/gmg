@@ -14,9 +14,9 @@ import (
 )
 
 var (
-	GITEA_SERVER = os.Getenv("GITEA_SERVER")
-	GITEA_ORG    = os.Getenv("GITEA_ORG")
-	GITEA_TOKEN  = os.Getenv("GITEA_ACCESS_TOKEN")
+	GiteaServer = os.Getenv("GITEA_SERVER")
+	GiteaOrg    = os.Getenv("GITEA_ORG")
+	GiteaToken  = os.Getenv("GITEA_ACCESS_TOKEN")
 )
 
 // MigrateRepoOptions represents the options for migrating a repository
@@ -58,19 +58,19 @@ func requestMigration(options MigrateRepoOptions) error {
 		return errors.New("GitHub token is required")
 	}
 
-	if GITEA_SERVER == "" {
+	if GiteaServer == "" {
 		fmt.Println("env GITEA_SERVER is required")
 		return errors.New("env GITEA_SERVER is required")
 	}
 
-	url := GITEA_SERVER + "/api/v1/repos/migrate"
+	url := GiteaServer + "/api/v1/repos/migrate"
 	values := map[string]interface{}{
 		"auth_token": token.Token,
 		"clone_addr": options.GitURI,
 		"mirror":     options.Mirror,
 		"private":    options.Private,
 		"repo_name":  options.Name,
-		"repo_owner": GITEA_ORG,
+		"repo_owner": GiteaOrg,
 		"server":     "github",
 	}
 	data, err := json.Marshal(values)
@@ -85,7 +85,7 @@ func requestMigration(options MigrateRepoOptions) error {
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+GITEA_TOKEN)
+	req.Header.Set("Authorization", "Bearer "+GiteaToken)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -147,7 +147,7 @@ func SetupPushMirror(options SetupPushMirrorOptions) error {
 		return errors.New("GitHub token is required")
 	}
 
-	if GITEA_SERVER == "" {
+	if GiteaServer == "" {
 		fmt.Println("env GITEA_SERVER is required")
 		return errors.New("env GITEA_SERVER is required")
 	}
@@ -157,7 +157,7 @@ func SetupPushMirror(options SetupPushMirrorOptions) error {
 		return errors.New("invalid git uri")
 	}
 
-	url := GITEA_SERVER + "/api/v1/repos/" + options.UsernameRepo + "/push_mirrors"
+	url := GiteaServer + "/api/v1/repos/" + options.UsernameRepo + "/push_mirrors"
 	values := map[string]interface{}{
 		"interval":        "0",
 		"remote_address":  options.GitURI,
@@ -177,7 +177,7 @@ func SetupPushMirror(options SetupPushMirrorOptions) error {
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+GITEA_TOKEN)
+	req.Header.Set("Authorization", "Bearer "+GiteaToken)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -196,18 +196,19 @@ func SetupPushMirror(options SetupPushMirrorOptions) error {
 	return nil
 }
 
-func validateGitURI(git_uri string) bool {
-	if strings.HasPrefix(git_uri, "https://") {
-		git_uri = strings.TrimPrefix(git_uri, "https://")
-	} else if strings.HasPrefix(git_uri, "http://") {
-		git_uri = strings.TrimPrefix(git_uri, "http://")
-	} else if strings.HasPrefix(git_uri, "git@") {
-		git_uri = strings.TrimPrefix(git_uri, "git@")
-	} else {
+func validateGitURI(gitURI string) bool {
+	switch {
+	case strings.HasPrefix(gitURI, "https://"):
+		gitURI = strings.TrimPrefix(gitURI, "https://")
+	case strings.HasPrefix(gitURI, "http://"):
+		gitURI = strings.TrimPrefix(gitURI, "http://")
+	case strings.HasPrefix(gitURI, "git@"):
+		gitURI = strings.TrimPrefix(gitURI, "git@")
+	default:
 		return false
 	}
 
-	parts := strings.Split(git_uri, "/")
+	parts := strings.Split(gitURI, "/")
 	if len(parts) != 3 {
 		return false
 	}

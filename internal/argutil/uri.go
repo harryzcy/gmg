@@ -8,7 +8,7 @@ import (
 
 var (
 	ErrInvalidArgument = fmt.Errorf("invalid argument")
-	ErrInvalidUri      = fmt.Errorf("invalid uri")
+	ErrInvalidURI      = fmt.Errorf("invalid uri")
 )
 
 func GetURI(args []string) (string, error) {
@@ -23,30 +23,31 @@ func GetURI(args []string) (string, error) {
 	uri := args[0]
 
 	var isGit bool
-	var trimmedUri string
-	if strings.HasPrefix(uri, "http://") {
-		trimmedUri = strings.TrimPrefix(uri, "http://")
-	} else if strings.HasPrefix(uri, "https://") {
-		trimmedUri = strings.TrimPrefix(uri, "https://")
-	} else if strings.HasPrefix(uri, "git@") {
-		trimmedUri = strings.TrimPrefix(uri, "git@")
+	var trimmedURI string
+	switch {
+	case strings.HasPrefix(uri, "http://"):
+		trimmedURI = strings.TrimPrefix(uri, "http://")
+	case strings.HasPrefix(uri, "https://"):
+		trimmedURI = strings.TrimPrefix(uri, "https://")
+	case strings.HasPrefix(uri, "git@"):
+		trimmedURI = strings.TrimPrefix(uri, "git@")
 		isGit = true
-	} else if strings.HasPrefix(uri, "git://") {
-		trimmedUri = strings.TrimPrefix(uri, "git://")
+	case strings.HasPrefix(uri, "git://"):
+		trimmedURI = strings.TrimPrefix(uri, "git://")
 		isGit = true
-	} else {
-		return "", ErrInvalidUri
+	default:
+		return "", ErrInvalidURI
 	}
 
 	var parts []string
 	if isGit {
-		parts = strings.SplitN(trimmedUri, ":", 2)
+		parts = strings.SplitN(trimmedURI, ":", 2)
 	} else {
-		parts = strings.SplitN(trimmedUri, "/", 2)
+		parts = strings.SplitN(trimmedURI, "/", 2)
 	}
 
 	if len(parts) != 2 {
-		return "", ErrInvalidUri
+		return "", ErrInvalidURI
 	}
 
 	domain := parts[0]
@@ -54,24 +55,24 @@ func GetURI(args []string) (string, error) {
 
 	pattern := regexp.MustCompile(`^([a-zA-Z0-9][a-zA-Z0-9-]*\.)?[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$`)
 	if !pattern.MatchString(domain) {
-		return "", ErrInvalidUri
+		return "", ErrInvalidURI
 	}
 
 	parts = strings.SplitN(path, "/", 2)
 	if len(parts) != 2 {
-		return "", ErrInvalidUri
+		return "", ErrInvalidURI
 	}
 
 	username := parts[0]
 	pattern = regexp.MustCompile(`^[a-zA-Z0-9-]+$`)
 	if !pattern.MatchString(username) {
-		return "", ErrInvalidUri
+		return "", ErrInvalidURI
 	}
 
 	repo := parts[1]
 	pattern = regexp.MustCompile(`^[a-zA-Z0-9-_\.]+$`)
 	if !pattern.MatchString(repo) {
-		return "", ErrInvalidUri
+		return "", ErrInvalidURI
 	}
 
 	return uri, nil
