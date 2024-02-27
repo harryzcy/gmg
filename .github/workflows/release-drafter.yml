@@ -1,0 +1,24 @@
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - main
+    tags-ignore:
+      - "v*"
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: Generate Notes
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: harryzcy/github-actions/.github/workflows/release-drafter.yml@main
