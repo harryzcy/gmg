@@ -10,27 +10,6 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        go-version: ["1.20", "1.21"]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-
-      - name: Set up Go
-        uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
-        with:
-          go-version: ${{ matrix.go-version }}
-
-      - name: Build
-        run: go build -v ./...
-
-      - name: Test with coverage
-        run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4
-        with:
-          file: ./coverage.txt
+  go-test:
+    name: Go Unit Tests
+    uses: harryzcy/github-actions/.github/workflows/go.yml@main

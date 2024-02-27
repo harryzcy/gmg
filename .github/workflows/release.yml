@@ -10,29 +10,5 @@ permissions:
 
 jobs:
   release:
-    if: github.repository_owner == 'harryzcy'
     name: Release on GitHub
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-
-      - uses: release-drafter/release-drafter@3f0f87098bd6b5c5b9a36d49c41d998ea58f9348 # v6
-        id: release_drafter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish Release
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
-        with:
-          script: |
-            await github.rest.repos.updateRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: ${{ steps.release_drafter.outputs.id }},
-              tag_name: '${{ github.ref_name }}',
-              name: 'Release ${{ github.ref_name }}',
-              draft: context.eventName != 'push'
-            });
+    uses: harryzcy/github-actions/.github/workflows/release.yml@main
