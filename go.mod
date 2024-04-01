@@ -5,6 +5,7 @@ go 1.21
 require (
 	github.com/cli/oauth v1.0.1
 	github.com/google/go-github/v60 v60.0.0
+	github.com/google/go-github/v61 v61.0.0
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.9.0
