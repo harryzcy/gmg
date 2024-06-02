@@ -6,7 +6,7 @@ require (
 	github.com/cli/oauth v1.0.1
 	github.com/google/go-github/v62 v62.0.0
 	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.2
+	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/oauth2 v0.20.0
 )
