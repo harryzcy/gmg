@@ -3,7 +3,7 @@ module go.zcy.dev/gmg
 go 1.22
 
 require (
-	github.com/cli/oauth v1.0.1
+	github.com/cli/oauth v1.1.0
 	github.com/google/go-github/v66 v66.0.0
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
