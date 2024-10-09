@@ -21,8 +21,12 @@ func Login() error {
 		fmt.Println("You already have a CLI token, skipping...")
 	} else {
 		fmt.Println("Generating GitHub OAuth token for CLI...")
+		host, err := oauth.NewGitHubHost("https://github.com")
+		if err != nil {
+			return err
+		}
 		flow := &oauth.Flow{
-			Host:     oauth.GitHubHost("https://github.com"),
+			Host:     host,
 			ClientID: os.Getenv("GITHUB_CLIENT_ID"),
 			Scopes:   []string{"repo"},
 		}
