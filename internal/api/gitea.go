@@ -94,7 +94,10 @@ func requestMigration(options MigrateRepoOptions) (err error) {
 		return err
 	}
 	defer func() {
-		err = resp.Body.Close()
+		closeErr := resp.Body.Close()
+		if err == nil {
+			err = closeErr
+		}
 	}()
 
 	body, err := io.ReadAll(resp.Body)
