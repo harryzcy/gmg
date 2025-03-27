@@ -49,7 +49,7 @@ func getNameFromGitURI(gitURI string) string {
 }
 
 // requestMigration requests a migration to Gitea
-func requestMigration(options MigrateRepoOptions) error {
+func requestMigration(options MigrateRepoOptions) (err error) {
 	storage.InitDefault()
 
 	token := storage.GetToken(storage.TokenKindGitHubGitea)
@@ -93,7 +93,9 @@ func requestMigration(options MigrateRepoOptions) error {
 		fmt.Println("Failed to send request:", err)
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		err = resp.Body.Close()
+	}()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
