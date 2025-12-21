@@ -6,7 +6,7 @@ networks:
 
 services:
   server:
-    image: gitea/gitea:1.24.6@sha256:2edc102cbb636ae1ddac5fa0c715aa5b03079dee13ac6800b2cef6d4e912e718
+    image: gitea/gitea:1.25.2@sha256:534428e78fc00d3ac8647f3467a3f91252acf23a46ea0c872f03191e3c878f7d
     container_name: gitea
     environment:
       - USER_UID=1000
