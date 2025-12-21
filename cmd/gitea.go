@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"go.zcy.dev/gmg/internal/api"
 	"go.zcy.dev/gmg/internal/argutil"
+	"go.zcy.dev/gmg/internal/platform"
 )
 
 // giteaCmd represents the gitea command
@@ -29,7 +29,7 @@ var giteaMigrateCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		options := api.MigrateRepoOptions{
+		options := platform.MigrateRepoOptions{
 			GitURI: uri,
 		}
 
@@ -49,7 +49,7 @@ var giteaMigrateCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		err = api.MigrateRepo(options)
+		err = platform.MigrateRepo(options)
 		if err != nil {
 			os.Exit(1)
 		}
@@ -62,7 +62,7 @@ var giteaMirrorCmd = &cobra.Command{
 	Short: "Mirror a repository to Gitea",
 	Run: func(cmd *cobra.Command, args []string) {
 		uri := args[0]
-		options := api.MigrateRepoOptions{
+		options := platform.MigrateRepoOptions{
 			GitURI: uri,
 			Mirror: true,
 		}
@@ -74,7 +74,7 @@ var giteaMirrorCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		err = api.MigrateRepo(options)
+		err = platform.MigrateRepo(options)
 		if err != nil {
 			os.Exit(1)
 		}
@@ -87,12 +87,12 @@ var giteaPushMirrorCmd = &cobra.Command{
 	Aliases: []string{"pm"},
 	Short:   "Setup a push mirror to a repository",
 	Run: func(_ *cobra.Command, args []string) {
-		options := api.SetupPushMirrorOptions{
+		options := platform.SetupPushMirrorOptions{
 			UsernameRepo: args[0],
 			GitURI:       args[1],
 		}
 
-		err := api.SetupPushMirror(options)
+		err := platform.SetupPushMirror(options)
 		if err != nil {
 			os.Exit(1)
 		}
