@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"go.zcy.dev/gmg/internal/api"
+	"go.zcy.dev/gmg/internal/platform"
 )
 
 // authCmd represents the auth command
@@ -18,7 +18,7 @@ var loginCmd = &cobra.Command{
 	Use:   "login",
 	Short: "Obtain GitHub OAuth tokens for CLI and Gitea",
 	Run: func(_ *cobra.Command, _ []string) {
-		err := api.Login()
+		err := platform.Login()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
