@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"go.zcy.dev/gmg/internal/api"
+	"go.zcy.dev/gmg/internal/platform"
 )
 
 // ghCmd represents the gh command
@@ -28,7 +28,7 @@ var repoCreateCmd = &cobra.Command{
 		}
 
 		name := args[0]
-		err := api.CreateRepo(name)
+		err := platform.CreateRepo(name)
 		if err != nil {
 			os.Exit(1)
 		}
