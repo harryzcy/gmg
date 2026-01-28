@@ -5,7 +5,7 @@ go 1.24.0
 toolchain go1.25.6
 
 require (
-	github.com/cli/oauth v1.2.1
+	github.com/cli/oauth v1.2.2
 	github.com/google/go-github/v82 v82.0.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
