@@ -1,12 +1,12 @@
 module go.zcy.dev/gmg
 
-go 1.24.0
+go 1.25.0
 
 toolchain go1.25.7
 
 require (
 	github.com/cli/oauth v1.2.2
-	github.com/google/go-github/v83 v83.0.0
+	github.com/google/go-github/v84 v84.0.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
 	github.com/stretchr/testify v1.11.1
