@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/cli/oauth"
 	"github.com/google/go-github/v87/github"
@@ -76,9 +77,10 @@ func Login() error {
 
 // CreateRepo creates a repository on GitHub
 func CreateRepo(name string) error {
-	ctx := context.Background()
-	storage.InitDefault()
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
 
+	storage.InitDefault()
 	return createRepoWithContext(ctx, name)
 }
 
