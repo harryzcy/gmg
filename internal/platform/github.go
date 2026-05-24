@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/cli/oauth"
-	"github.com/google/go-github/v86/github"
+	"github.com/google/go-github/v87/github"
 	"go.zcy.dev/gmg/internal/storage"
 	"golang.org/x/oauth2"
 )
@@ -95,7 +95,10 @@ func createRepoWithContext(ctx context.Context, name string) error {
 	)
 	tc := oauth2.NewClient(ctx, ts)
 
-	client := github.NewClient(tc)
+	client, err := github.NewClient(github.WithHTTPClient(tc))
+	if err != nil {
+		return err
+	}
 
 	org := os.Getenv("GITHUB_ORG")
 	repo, _, err := client.Repositories.Create(ctx, org, &github.Repository{
