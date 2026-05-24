@@ -95,7 +95,10 @@ func createRepoWithContext(ctx context.Context, name string) error {
 	)
 	tc := oauth2.NewClient(ctx, ts)
 
-	client := github.NewClient(tc)
+	client, err := github.NewClient(github.WithHTTPClient(tc))
+	if err != nil {
+		return err
+	}
 
 	org := os.Getenv("GITHUB_ORG")
 	repo, _, err := client.Repositories.Create(ctx, org, &github.Repository{
