@@ -13,4 +13,4 @@ jobs:
     name: Release on GitHub
     permissions:
       contents: write
-    uses: harryzcy/github-actions/.github/workflows/release.yml@87c34ce6929775ac6d5f18b0eefb70c098151418 # main
+    uses: harryzcy/github-actions/.github/workflows/release.yml@50a8565a93b1dbfc0d4f18555b2395831c3e5df8 # main
