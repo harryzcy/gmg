@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/cli/oauth"
-	"github.com/google/go-github/v91/github"
+	"github.com/google/go-github/v92/github"
 	"go.zcy.dev/gmg/internal/storage"
 	"golang.org/x/oauth2"
 )
