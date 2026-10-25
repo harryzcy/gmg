@@ -2,7 +2,7 @@ module go.zcy.dev/gmg
 
 go 1.27.0
 
-toolchain go1.27.2
+toolchain go1.27.3
 
 require (
 	github.com/cli/oauth v1.3.0
